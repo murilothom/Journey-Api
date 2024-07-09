@@ -1,4 +1,5 @@
-﻿using Journey.Communication.Requests;
+﻿using FluentValidation;
+using Journey.Communication.Requests;
 using Journey.Communication.Responses;
 using Journey.Exception;
 using Journey.Exception.ExceptionsBase;
@@ -37,19 +38,15 @@ namespace Journey.Application.UseCases.Trips.Register
 
         private void Validate(RequestRegisterTripJson request)
         {
-            if (string.IsNullOrEmpty(request.Name))
-            {
-                throw new BadRequestException(ResourceErrorMessages.NAME_EMPTY);
-            }
+            var validator = new RegisterTripValidator();
 
-            if (request.StartDate.Date < DateTime.UtcNow.Date)
-            {
-                throw new BadRequestException(ResourceErrorMessages.START_DATE_TRIP_MUST_BE_GREATER_THAN_TODAY);
-            }
+            var result = validator.Validate(request);
 
-            if (request.EndDate.Date <= request.StartDate.Date)
+            if (result.IsValid == false)
             {
-                throw new BadRequestException(ResourceErrorMessages.END_DATE_TRIP_MUST_BE_GREATER_THAN_START_DATE);
+                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+
+                throw new BadRequestException(errorMessages);
             }
         }
     }

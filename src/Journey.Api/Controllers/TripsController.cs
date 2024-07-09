@@ -16,7 +16,7 @@ namespace Journey.Api.Controllers
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseShortTripJson), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
         public IActionResult Register([FromBody] RequestRegisterTripJson request)
         {
             var registerTripUseCase = new RegisterTripUseCase();
@@ -39,7 +39,7 @@ namespace Journey.Api.Controllers
 
         [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(ResponseTripJson), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
         public IActionResult GetById([FromRoute] Guid id)
         {
             var getByIdUseCase = new GetTripByIdUseCase();
@@ -51,7 +51,7 @@ namespace Journey.Api.Controllers
 
         [HttpDelete("{id:Guid}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
         public IActionResult DeleteById([FromRoute] Guid id)
         {
             var deleteTripByIdUseCase = new DeleteTripByIdUseCase();
