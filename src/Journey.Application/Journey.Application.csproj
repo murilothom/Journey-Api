@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Activities\Complete\" />
     <Folder Include="UseCases\Activities\Delete\" />
   </ItemGroup>
 
