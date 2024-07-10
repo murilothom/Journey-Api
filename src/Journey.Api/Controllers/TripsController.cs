@@ -4,8 +4,6 @@ using Journey.Application.UseCases.Trips.GetById;
 using Journey.Application.UseCases.Trips.Register;
 using Journey.Communication.Requests;
 using Journey.Communication.Responses;
-using Journey.Exception;
-using Journey.Exception.ExceptionsBase;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Journey.Api.Controllers
@@ -47,10 +45,10 @@ namespace Journey.Api.Controllers
             var response = getByIdUseCase.Execute(id);
 
             return Ok(response);
-        } 
+        }
 
         [HttpDelete("{id:Guid}")]
-        [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
         public IActionResult DeleteById([FromRoute] Guid id)
         {
@@ -59,6 +57,6 @@ namespace Journey.Api.Controllers
             deleteTripByIdUseCase.Execute(id);
 
             return NoContent();
-        } 
+        }
     }
 }
